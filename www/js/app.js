@@ -23,7 +23,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
   });
 }).factory('Informacion', function() {//Variable global 
   var artista= {
-    jugador:'fefe',
+    jugador:'',
     sonidos:[],
     estado:'none'  };
   return{

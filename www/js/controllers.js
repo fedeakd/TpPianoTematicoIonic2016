@@ -9,11 +9,10 @@ function ($scope, $stateParams) {
 }])
 
 .controller('pianoCtrl', 
-  function ($scope, $stateParams,$ionicPlatform, $timeout, $cordovaNativeAudio,Informacion,$cordovaFile) {
+  function ($scope, $stateParams,$ionicPlatform, $timeout, $cordovaNativeAudio,Informacion,$cordovaFile,$cordovaVibration) {
    var vm = this;
    $scope.yaguardo=false;
-  $ionicPlatform.ready(function() {
-
+   $ionicPlatform.ready(function() {
         // all calls to $cordovaNativeAudio return promises
         try{
         	$cordovaNativeAudio.preloadSimple('caballo', 'sonidos/Caballo.mp3');
@@ -28,8 +27,10 @@ function ($scope, $stateParams) {
         }
       });
 
-  $scope.play = function(sound) {
+   $scope.play = function(sound) {
+     $cordovaVibration.vibrate(500);
     if(Informacion.artista.sonidos.length ==6){
+       
       Informacion.artista.sonidos.unshift(sound); 
       Informacion.artista.sonidos.pop();   
     }
@@ -102,12 +103,12 @@ function ($scope, $stateParams) {
 .controller('usuariosCtrl',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,$cordovaFile,$ionicPlatform,$cordovaNativeAudio) {
+function ($scope, $stateParams,$state,$cordovaFile,$ionicPlatform,$cordovaNativeAudio,$cordovaVibration) {
 
-
-  $scope.arrayUsuarios=[{jugador:'fede',estado:'none'  ,apellido:'none',sonidos:['caballo','gato','gato']},
-  {jugador:'fede' ,estado:'none',apellido:'santamaria',sonidos:['caballo','gallo','gato']}];
-  $scope.arrayUsuarios.push({jugador:'josefa',apellido:'nidea',estado:"none",sonidos:['caballo','gallo','gato','puerco','lechuza','leon']});
+    $scope.arrayUsuarios=[];
+ // $scope.arrayUsuarios=[{jugador:'fede',estado:'none'  ,apellido:'none',sonidos:['caballo','gato','gato']},
+ // {jugador:'fede' ,estado:'none',apellido:'santamaria',sonidos:['caballo','gallo','gato']}];
+ // $scope.arrayUsuarios.push({jugador:'josefa',apellido:'nidea',estado:"none",sonidos:['caballo','gallo','gato','puerco','lechuza','leon']});
   $ionicPlatform.ready(function() {
 
         // all calls to $cordovaNativeAudio return promises
@@ -127,6 +128,7 @@ function ($scope, $stateParams,$state,$cordovaFile,$ionicPlatform,$cordovaNative
   $scope.play = function(sound) {
     try{
       $cordovaNativeAudio.play(sound);
+      $cordovaVibration.vibrate(500);
     }
     catch(e){
       console.log("No estas en un celular");
@@ -159,15 +161,18 @@ function ($scope, $stateParams,$state,$cordovaFile,$ionicPlatform,$cordovaNative
     }
   })
 
-.controller('loginCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope','$stateParams','$state', 'Informacion', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state) {
-	$scope.Iniciar=function(){
-		//Informacion.jugador=$scope.usuario.nombre;
-		$state.go("tabsController.piano");
+function ($scope, $stateParams,$state,Informacion) {
+  $scope.usuario={};
+  $scope.usuario.nombre="";
+  $scope.Iniciar=function(){
+		//Informacion.artista.jugador=$scope.usuario.nombre;
+    Informacion.artista.jugador=$scope.usuario.nombre;
+    $state.go("tabsController.piano");
 
-	}
+  }
 
 }]).controller('GeneralCtrl',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
