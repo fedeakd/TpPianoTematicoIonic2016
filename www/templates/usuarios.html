@@ -1,8 +1,31 @@
 <ion-view title="Usuarios" id="page7">
-    <ion-content padding="true" style="background: url(img/1VPXiF9QWScdnUb82s3S_texture_parquet_background_hd-wallpaper-379456.jpg) no-repeat center;background-size:cover;" class="has-header">
-	  <div class="button button-balanced button-large" ng-click="prueba()"  style="font-size:22px;">
-            
-        </div>
+<ion-content padding="true" style="background: url(img/1VPXiF9QWScdnUb82s3S_texture_parquet_background_hd-wallpaper-379456.jpg) no-repeat center;background-size:cover;" class="has-header">
+<div class="list card"  ng-repeat="item in arrayUsuarios"  >
+	<div class="bar bar-header bar-positive" ng-click="MostrarContenedor({{$index}})">{{item.jugador}}</div>
+	<div class="item " style="background:#00c2ff"   >
+		
+		<div style="display:{{item.estado}};background:#00c2ff">
 
+			<br>
+			<div class="row">
+			 <i class="icon ion-music-note"></i>
+				<p class="color:#d7da49;text-align:center;">sonidos:</p>
+				 <i class="icon ion-music-note"></i>
+			</div>	
+			<div class="row" >
+				
+				<div  ng-repeat="sonido in item.sonidos track by $index" > 
+
+					<div class="col-offset-10 col button-small button button-balanced " ng-click="play('{{sonido}}')"  style="font-size:1px;">
+						<img src="img/ImagenBotones/{{sonido}}.png"  height="42" width="42">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
+</div>
 </ion-content>
 </ion-view>

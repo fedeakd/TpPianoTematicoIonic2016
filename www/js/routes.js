@@ -13,6 +13,7 @@ angular.module('app.routes', [])
       .state('tabsController', {
     url: '/tabs',
     templateUrl: 'templates/tabsController.html',
+    controller:'GeneralCtrl',
     abstract:true
   })
 
@@ -38,6 +39,7 @@ angular.module('app.routes', [])
 
   .state('tabsController.usuarios', {
     url: '/Usuarios',
+    cache: false,
     views: {
       'tab6': {
         templateUrl: 'templates/usuarios.html',
