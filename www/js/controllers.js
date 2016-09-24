@@ -165,10 +165,37 @@ try{
   }
 })
 
-.controller('loginCtrl', ['$scope','$stateParams','$state', 'Informacion', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope','$stateParams','$state', 'Informacion','$cordovaFile','$ionicPlatform', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,Informacion) {
+function ($scope, $stateParams,$state,Informacion,$cordovaFile,$ionicPlatform) {
+
+  try{
+    $ionicPlatform.ready(  function() {
+      $cordovaFile.checkFile(cordova.file.externalRootDirectory, "prueba.txt")
+      .then(function (success) {
+        $scope.devuelve=success;
+      }, function (error) {
+        $ionicPlatform.ready(function() {
+          $cordovaFile.writeFile(cordova.file.externalRootDirectory, "prueba.txt",'[]', true)
+          .then(function (success) {
+            $ionicPopup.alert({
+              title: 'Informacion',
+              template: 'Se a creado un archivo'
+
+            });
+          }, function (error) {
+          });
+
+        });
+      });
+    });
+  }
+  catch(e){
+    alert("Algo salio mal");
+  }
+
+
   $scope.usuario={};
   $scope.usuario.nombre="";
   $scope.Iniciar=function(){
